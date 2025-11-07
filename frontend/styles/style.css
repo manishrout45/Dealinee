@@ -1,0 +1,8 @@
+/* Custom styles for property cards */
+#property-list div {
+  transition: transform 0.3s ease-in-out;
+}
+
+#property-list div:hover {
+  transform: scale(1.02);
+}

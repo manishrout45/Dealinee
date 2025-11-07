@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Dealinee Estate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body class="font-sans">
+<!-- Navbar -->
+<nav id="navbar" class="fixed top-0 left-0 w-full bg-white text-black shadow-md px-6 py-4 transition-all duration-500 z-50 flex items-center">
+    <div class="container mx-auto flex justify-between items-center">
+        <!-- Logo (Default) -->
+        <div class="relative">
+            <a href="index.html">
+                <img id="logo-default" src="/frontend/assets/new logo black.png" alt="Logo" class="h-12 transition-opacity duration-500">
+                <img id="logo-scroll" src="/frontend/assets/white-new-logo.webp" alt="Scrolled Logo" class="h-12 absolute top-0 left-0 opacity-0 transition-opacity duration-500">
+            </a>
+        </div>
+
+        <!-- Menu Button (Mobile) -->
+        <button id="menu-btn" class="text-gray-700 block md:hidden text-3xl focus:outline-none">
+            ☰
+        </button>
+
+        <!-- Menu Links (Desktop) -->
+        <ul id="menu" class="hidden md:flex space-x-6 font-semibold">
+            <li><a href="/frontend/index.html" class="nav-link px-4 py-2 rounded-full transition hover:text-blue-500">Home</a></li>
+            <li><a href="/frontend/pages/about.html" class="nav-link px-4 py-2 rounded-full transition hover:text-blue-500">About</a></li>
+            <li><a href="/frontend/pages/contact.html" class="nav-link px-4 py-2 rounded-full transition hover:text-blue-500">Contact</a></li>
+            <li><a href="tel:+917008937155" class="nav-link px-4 py-2 rounded-full transition hover:text-blue-500">+91 7008937155</a></li>
+            <li>
+                <a href="/frontend/admin.html" class="nav-link px-4 py-2 rounded-full bg-emerald-700 text-white shadow-md hover:bg-emerald-800 transition">
+                    Sign In
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-[80vh] bg-white text-gray-900 text-center transform -translate-y-full transition-transform duration-500 ease-in-out shadow-lg z-50 overflow-y-auto">    <div class="absolute top-7 left-6 text-xl font-bold">Menu</div>
+    <button id="close-btn" class="absolute top-5 right-5 text-3xl font-bold text-gray-900 focus:outline-none">x</button>
+    
+    <!-- Line below Menu and Close button -->
+    <hr class="absolute top-14 left-0 w-full border-t border-gray-300">
+    
+    <ul class="flex flex-col space-y-6 pt-20 text-xl">
+        <li><a href="/frontend/index.html" class="block py-3 hover:text-blue-500">Home</a></li>
+        <li><a href="/frontend/pages/about.html" class="block py-3 hover:text-blue-500">About</a></li>
+        <li><a href="/frontend/pages/contact.html" class="block py-3 hover:text-blue-500">Contact</a></li>
+        <li><a href="tel:+917008937155" class="block py-3 hover:text-blue-500">+91 7008937155</a></li>
+        <li>
+            <a href="/frontend/admin.html" class="block py-3 bg-blue-600 text-white rounded-md px-6 py-2 mx-auto w-32 hover:bg-blue-700">
+                Sign In
+            </a>
+        </li>
+    </ul>
+</div>
+</nav>
+
+<!-- JavaScript -->
+<script>
+    let lastScrollY = 0;
+    let navbar = document.getElementById("navbar");
+    let logoDefault = document.getElementById("logo-default");
+    let logoScroll = document.getElementById("logo-scroll");
+    let menuBtn = document.getElementById("menu-btn"); 
+    let isScrolled = false;
+
+    function handleScroll() {
+        let currentScrollY = window.scrollY;
+        let scrollThreshold = 50; // Change happens at 50px scroll
+
+        if (currentScrollY > scrollThreshold && !isScrolled) {
+            // Apply scroll changes
+            isScrolled = true;
+            navbar.classList.add("bg-[#152651]", "text-white", "rounded-b-[50px]", "shadow-lg");
+            navbar.classList.remove("bg-white", "text-black");
+
+            logoDefault.classList.add("opacity-0");
+            logoScroll.classList.remove("opacity-0");
+
+
+             // Change menu button color to white
+             menuBtn.classList.remove("text-gray-700");
+            menuBtn.classList.add("text-white");
+
+        } else if (currentScrollY <= scrollThreshold && isScrolled) {
+            // Revert to original navbar
+            isScrolled = false;
+            navbar.classList.add("bg-white", "text-black");
+            navbar.classList.remove("bg-[#152651]", "text-white", "rounded-b-[50px]", "shadow-lg");
+
+            logoDefault.classList.remove("opacity-0");
+            logoScroll.classList.add("opacity-0");
+
+             // Change menu button color back to gray
+             menuBtn.classList.remove("text-white");
+            menuBtn.classList.add("text-gray-700");
+        }
+    }
+
+    // Attach scroll event listener
+    window.addEventListener("scroll", handleScroll);
+
+   // Mobile Menu Toggle
+document.getElementById("menu-btn").addEventListener("click", function() {
+    document.getElementById("mobile-menu").classList.remove("-translate-y-full");
+    document.getElementById("mobile-menu").classList.add("translate-y-0");
+});
+
+document.getElementById("close-btn").addEventListener("click", function() {
+    document.getElementById("mobile-menu").classList.add("-translate-y-full");
+    document.getElementById("mobile-menu").classList.remove("translate-y-0");
+});
+
+
+    // Highlight active link
+    function setActiveLink() {
+        let links = document.querySelectorAll(".nav-link");
+        let currentPath = window.location.pathname;
+
+        links.forEach(link => {
+            let linkPath = new URL(link.href).pathname;
+
+            if (linkPath === currentPath) {
+                link.classList.add("bg-blue-500", "text-white", "hover:text-gray-800", "rounded-full");
+            } else {
+                link.classList.remove("bg-blue-500", "text-white","hover:text-gray-800", "rounded-full");
+            }
+        });
+    }
+
+    // Run on page load
+    window.addEventListener("DOMContentLoaded", setActiveLink);
+</script>
+
+  
+    <!-- Hero Section -->
+<section class="relative bg-cover bg-center h-[70vh] overflow-hidden">
+    <div class="absolute inset-0 animate-zoom bg-cover bg-center" style="background-image: url('/src/assets/image/about/image1.jpg');"></div>
+    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="text-center text-white px-6">
+            <h1 class="text-4xl font-bold mb-4">About Us</h1>
+            <p class="text-lg max-w-2xl mx-auto">Dealinee Estate offers expert real estate solutions, including residential, commercial, land sales, and rentals. We ensure a seamless experience for buyers, sellers, and investors.
+                 </div>
+    </div>
+</section>
+
+<style>
+@keyframes zoom {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+.animate-zoom {
+    animation: zoom 8s ease-in-out infinite alternate;
+}
+</style>
+                <!-- Hero Section close -->
+               
+                    <h2 class=" text-center text-4xl font-bold text-gray-900 mt-12 fade-in">Meet Our Team</h2>
+
+                    <section class=" max-w-7xl mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 gap-10 ">
+                        <!-- Chandan Section -->
+                        <div class=" bg-white p-10 rounded-2xl shadow-lg flex flex-col md:flex-row items-center transition-all duration-500 hover:shadow-2xl left-in">
+                            <div class="w-56 h-56 md:w-64 md:h-64 rounded-xl overflow-hidden shadow-lg border-2 border-gray-300 transform hover:scale-105 transition-transform duration-300">
+                                <img src="/frontend/assets/image/about/chandan.webp" alt="Chandan Sahu" class="w-full h-full object-cover">
+                            </div>
+                            <div class="ml-8 text-center md:text-left">
+                                <h1 class="text-3xl md:text-4xl font-semibold text-gray-800">Chandan Ku. Sahoo</h1>
+                                <h3 class="text-1xl md:text-2xl font-semibold text-gray-800">(Founder)</h3>
+                                <p class="text-gray-600 mt-3 text-lg max-w-2xl">
+                                    Real estate marketing expert committed to providing innovative solutions for seamless property buying, selling, and renting.            </p>
+                                <!-- Social Media Links -->
+                            <div class="mt-5 flex justify-center md:justify-start space-x-4">
+                                <a href="https://www.facebook.com/yourprofile" target="_blank" class="text-gray-500 hover:text-blue-600 text-2xl transition-colors duration-300">
+                                    <i class="fa-brands fa-facebook-f"></i>
+                                </a>
+                                <a href="https://twitter.com/yourprofile" target="_blank" class="text-gray-500 hover:text-blue-400 text-2xl transition-colors duration-300">
+                                    <i class="fa-brands fa-twitter"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/in/yourprofile" target="_blank" class="text-gray-500 hover:text-blue-700 text-2xl transition-colors duration-300">
+                                    <i class="fa-brands fa-linkedin"></i>
+                                </a>
+                                <a href="https://www.instagram.com/yourprofile" target="_blank" class="text-gray-500 hover:text-pink-500 text-2xl transition-colors duration-300">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </a>
+                            </div>
+                            </div>
+                        </div>
+                    
+                        <!-- Sandeep Section -->
+                        <div class="bg-white p-10 rounded-2xl shadow-lg flex flex-col md:flex-row items-center transition-all duration-500 hover:shadow-2xl right-in">
+                            <div class="w-56 h-56 md:w-64 md:h-64 rounded-xl overflow-hidden shadow-lg border-2 border-gray-300 transform hover:scale-105 transition-transform duration-300">
+                                <img src="/frontend/assets/image/about/sandeep.webp" alt="Sandeep" class="w-full h-full object-cover">
+                            </div>
+                            <div class="ml-8 text-center md:text-left">
+                                <h1 class="text-3xl md:text-4xl font-semibold text-gray-800">Sandeep Ku. Sahoo</h1>
+                                <h3 class="text-1xl md:text-2xl font-semibold text-gray-800">(Co-Founder)</h3>
+                                <p class="text-gray-600 mt-3 text-lg max-w-2xl">
+                                    We follow a strategic and streamlined approach to real estate, ensuring efficient property transactions with a focus on quality, transparency, and client satisfaction.                                </p>
+                                <!-- Social Media Links -->
+                            <div class="mt-5 flex justify-center md:justify-start space-x-4">
+                                <a href="https://www.facebook.com/yourprofile" target="_blank" class="text-gray-500 hover:text-blue-600 text-2xl transition-colors duration-300">
+                                    <i class="fa-brands fa-facebook-f"></i>
+                                </a>
+                                <a href="https://twitter.com/yourprofile" target="_blank" class="text-gray-500 hover:text-blue-400 text-2xl transition-colors duration-300">
+                                    <i class="fa-brands fa-twitter"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/in/yourprofile" target="_blank" class="text-gray-500 hover:text-blue-700 text-2xl transition-colors duration-300">
+                                    <i class="fa-brands fa-linkedin"></i>
+                                </a>
+                                <a href="https://www.instagram.com/yourprofile" target="_blank" class="text-gray-500 hover:text-pink-500 text-2xl transition-colors duration-300">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </a>
+                            </div>  
+                            </div>
+                        </div>
+                    </section>
+              
+                    
+                    <!-- CSS for Animations -->
+                    <style>
+                        .fade-in {
+                            opacity: 0;
+                            transform: translateY(20px);
+                            animation: fadeInUp 0.8s ease-in-out forwards;
+                        }
+                    
+                        .left-in {
+                            opacity: 0;
+                            transform: translateX(-50px);
+                            animation: slideInLeft 0.8s ease-in-out forwards;
+                        }
+                    
+                        .right-in {
+                            opacity: 0;
+                            transform: translateX(50px);
+                            animation: slideInRight 0.8s ease-in-out forwards;
+                        }
+                    
+                        @keyframes fadeInUp {
+                            from {
+                                opacity: 0;
+                                transform: translateY(20px);
+                            }
+                            to {
+                                opacity: 1;
+                                transform: translateY(0);
+                            }
+                        }
+                    
+                        @keyframes slideInLeft {
+                            from {
+                                opacity: 0;
+                                transform: translateX(-50px);
+                            }
+                            to {
+                                opacity: 1;
+                                transform: translateX(0);
+                            }
+                        }
+                    
+                        @keyframes slideInRight {
+                            from {
+                                opacity: 0;
+                                transform: translateX(50px);
+                            }
+                            to {
+                                opacity: 1;
+                                transform: translateX(0);
+                            }
+                        }
+                    </style>
+
+
+<!-- Work Process Section -->
+<section class="bg-gray-100">
+<section class=" max-w-5xl mx-auto mt-10 p-8">
+    <h2 class="text-2xl font-semibold text-gray-800 text-center md:text-left">Work Process</h2>
+    <p class="text-gray-500 text-sm mt-2 text-center md:text-left">I follow a structured approach to design, ensuring quality and efficiency in every step.</p>
+
+    <!-- Process Grid -->
+    <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Step 1 -->
+        <div class="bg-white p-6 rounded-lg shadow-md text-center">
+            <div class="text-purple-600 text-3xl"><i class="fas fa-search"></i></div>
+            <h3 class="text-lg font-semibold mt-2">1. Property Listing & Market Research 📍 </h3>
+            <p class="text-gray-500 text-sm"> Understanding client requirements, arranging property site visits, and providing detailed insights on investment opportunities.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bg-white p-6 rounded-lg shadow-md text-center">
+            <div class="text-purple-600 text-3xl"><i class="fas fa-chart-bar"></i></div>
+            <h3 class="text-lg font-semibold mt-2">2. Client Consultation & Site Visits 🤝</h3>
+            <p class="text-gray-500 text-sm"> Understanding client requirements, arranging property site visits, and providing detailed insights on investment opportunities.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bg-white p-6 rounded-lg shadow-md text-center">
+            <div class="text-purple-600 text-3xl"><i class="fas fa-paint-brush"></i></div>
+            <h3 class="text-lg font-semibold mt-2">3.  Financial Assistance 💰</h3>
+            <p class="text-gray-500 text-sm">  Helping clients negotiate fair prices, offering guidance on home loans, EMI options, and assisting with legal formalities.</p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="bg-white p-6 rounded-lg shadow-md text-center">
+            <div class="text-purple-600 text-3xl"><i class="fas fa-rocket"></i></div>
+            <h3 class="text-lg font-semibold mt-2">4. Buying, Selling & Rental Solutions 🏡</h3>
+            <p class="text-gray-500 text-sm">Facilitating plot purchases, house sales, rental agreements, and ensuring smooth documentation for secure transactions.</p>
+        </div>
+    </div>
+</section>
+</section>
+
+    
+<!-- Property Images Grid -->
+<section class="py-12 bg-gray-100">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Featured Properties</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            
+            <!-- House 1 -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                <img src="/frontend/assets/image/about/house1.jpg" 
+                     alt="House 1" class="w-full h-64 object-cover">
+            </div>
+
+            <!-- House 2 -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                <img src="/frontend/assets/image/about/house2.jpg" 
+                     alt="House 2" class="w-full h-64 object-cover">
+            </div>
+
+            <!-- House 3 -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                <img src="/frontend/assets/image/about/house3.jpg" 
+                     alt="House 3" class="w-full h-64 object-cover">
+            </div>
+
+            <!-- House 4 -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                <img src="/frontend/assets/image/about/house4.jpg" 
+                     alt="House 4" class="w-full h-64 object-cover">
+            </div>
+
+            <!-- House 5 -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                <img src="/frontend/assets/image/about/house5.jpg" 
+                     alt="House 5" class="w-full h-64 object-cover">
+            </div>
+
+            <!-- House 6 -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                <img src="/frontend/assets/image/about/house6.jpg" 
+                     alt="House 6" class="w-full h-64 object-cover">
+            </div>
+
+            <!-- House 7 -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                <img src="/frontend/assets/image/about/house2.jpg" 
+                     alt="House 7" class="w-full h-64 object-cover">
+            </div>
+
+            <!-- House 8 -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                <img src="/frontend/assets/image/about/house3.jpg" 
+                     alt="House 8" class="w-full h-64 object-cover">
+            </div>
+
+            <!-- House 9 -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                <img src="/frontend/assets/image/about/house4.jpg" 
+                     alt="House 9" class="w-full h-64 object-cover">
+            </div>
+
+            <!-- House 10 -->
+            <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                <img src="/frontend/assets/image/about/house5.jpg" 
+                     alt="House 10" class="w-full h-64 object-cover">
+            </div>
+
+        </div>
+    </div>
+</section>
+    <!-- Testimonials Section -->
+<section class="container mx-auto p-8 text-center bg-gradient-to-r from-blue-100 to-white">
+    <h2 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-purple-500 mb-10 drop-shadow-lg">What Our Clients Say</h2>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+        
+        <!-- Testimonial Card -->
+        <div class="relative p-6 bg-white bg-opacity-80 backdrop-blur-lg shadow-xl rounded-xl border border-gray-200 transition-transform transform hover:-translate-y-2 hover:shadow-2xl">
+            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
+                <img src="/frontend/assets/image/about/Khalid Ahmed.jpg" alt="Client 1" class="rounded-full w-20 h-20 object-cover border-4 border-blue-600 shadow-lg">
+            </div>
+            <div class="mt-10">
+                <p class="text-gray-700 italic text-lg leading-relaxed">“Working with Dealinee Estate was an incredibly smooth and positive experience. My primary contact, Chandan Sahoo, impressed me with his professionalism and integrity.”</p>
+                <h3 class="text-xl font-semibold mt-4 text-blue-700">Khalid Ahmed</h3>
+                <div class="flex justify-center mt-2 text-yellow-400 text-lg">⭐⭐⭐⭐⭐</div>
+            </div>
+        </div>
+
+        <!-- Testimonial Card -->
+        <div class="relative p-6 bg-white bg-opacity-80 backdrop-blur-lg shadow-xl rounded-xl border border-gray-200 transition-transform transform hover:-translate-y-2 hover:shadow-2xl">
+            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
+                <img src="/frontend/assets/image/about/testimonial2.jpg" alt="Client 2" class="rounded-full w-20 h-20 object-cover border-4 border-blue-600 shadow-lg">
+            </div>
+            <div class="mt-10">
+                <p class="text-gray-700 italic text-lg leading-relaxed">“I had a great experience. They understood my needs perfectly and delivered beyond expectations.”</p>
+                <h3 class="text-xl font-semibold mt-4 text-blue-700">David Williams</h3>
+                <div class="flex justify-center mt-2 text-yellow-400 text-lg">⭐⭐⭐⭐⭐</div>
+            </div>
+        </div>
+
+        <!-- Testimonial Card -->
+        <div class="relative p-6 bg-white bg-opacity-80 backdrop-blur-lg shadow-xl rounded-xl border border-gray-200 transition-transform transform hover:-translate-y-2 hover:shadow-2xl">
+            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
+                <img src="/frontend/assets/image/about/testimonial3.jpg" alt="Client 3" class="rounded-full w-20 h-20 object-cover border-4 border-blue-600 shadow-lg">
+            </div>
+            <div class="mt-10">
+                <p class="text-gray-700 italic text-lg leading-relaxed">“Exceptional service and support. I highly appreciate their dedication and expertise.”</p>
+                <h3 class="text-xl font-semibold mt-4 text-blue-700">Sophia Martinez</h3>
+                <div class="flex justify-center mt-2 text-yellow-400 text-lg">⭐⭐⭐⭐⭐</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+    <!-- Footer component  -->
+    <div id="footer"> </div>
+    <script src="/frontend/js/utils/footer.js"></script>
+    <!-- Footer component close  -->
+
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function () {
+            document.getElementById('menu').classList.toggle('hidden');
+        });
+    </script>
+
+    
+</body>
+</html>

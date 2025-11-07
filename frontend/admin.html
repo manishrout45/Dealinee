@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+
+
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- ✅ Navbar -->
+  <div class="bg-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold text-blue-700">Admin Dashboard</h1>
+    <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Logout</button>
+  </div>
+
+  <!-- ✅ Add Property Section -->
+  <section class="max-w-3xl mx-auto p-6 bg-white shadow rounded mt-10">
+    <h2 class="text-2xl font-bold mb-4 text-center text-blue-700">Add New Property</h2>
+
+    <form id="propertyForm" class="space-y-3">
+      <input type="text" name="title" placeholder="Title" class="border p-2 w-full rounded" required>
+      <input type="text" name="location" placeholder="Location" class="border p-2 w-full rounded" required>
+      <input type="text" name="SBU" placeholder="SBU" class="border p-2 w-full rounded">
+      <input type="text" name="CA" placeholder="CA" class="border p-2 w-full rounded">
+
+      <select name="furnishing" class="border p-2 w-full rounded">
+        <option>Furnished</option>
+        <option>Semi-Furnished</option>
+        <option>Unfurnished</option>
+      </select>
+
+      <select name="propertyFor" class="border p-2 w-full rounded">
+        <option>Rent</option>
+        <option>Buy</option>
+        <option>Commercial</option>
+        <option>Plot</option>
+      </select>
+
+      <select name="type" class="border p-2 w-full rounded">
+        <option>Apartment</option>
+        <option>Individual House</option>
+      </select>
+
+      <input type="file" name="images" multiple class="border p-2 w-full rounded">
+
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">
+        Add Property
+      </button>
+    </form>
+  </section>
+
+  <!-- ✅ Property List Section -->
+  <section class="max-w-6xl mx-auto p-6 bg-white shadow rounded mt-10">
+    <h3 class="text-xl font-semibold mb-4 text-blue-700 text-center">Manage Properties</h3>
+    <div id="property-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </section>
+
+  <!-- ✅ Update Property Modal -->
+  <div id="updateModal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+    <div class="bg-white p-6 rounded-lg w-96 shadow-lg relative">
+      <button id="closeModal" class="absolute top-2 right-3 text-gray-600 text-xl">&times;</button>
+      <h3 class="text-xl font-semibold text-blue-600 mb-4">Update Property</h3>
+
+      <form id="updateForm" class="space-y-3">
+        <input type="hidden" name="id">
+        <input type="text" name="title" placeholder="Title" class="border p-2 w-full rounded" required>
+        <input type="text" name="location" placeholder="Location" class="border p-2 w-full rounded" required>
+        <input type="text" name="sbu" placeholder="SBU" class="border p-2 w-full rounded">
+        <input type="text" name="ca" placeholder="CA" class="border p-2 w-full rounded">
+
+        <select name="furnishing" class="border p-2 w-full rounded">
+          <option>Furnished</option>
+          <option>Semi-Furnished</option>
+          <option>Unfurnished</option>
+        </select>
+
+        <select name="propertyFor" class="border p-2 w-full rounded">
+          <option>Rent</option>
+          <option>Buy</option>
+          <option>Commercial</option>
+          <option>Plot</option>
+        </select>
+
+        <select name="type" class="border p-2 w-full rounded">
+          <option>Apartment</option>
+          <option>Individual House</option>
+        </select>
+
+        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full">
+          Update Property
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ Logout Script -->
+  <script>
+    function logout() {
+      localStorage.removeItem("adminToken");
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <script src="./js/admin.js"></script>
+</body>
+
+</html>

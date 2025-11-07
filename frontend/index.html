@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Dealinee Estate</title>
+    <link rel="icon" type="image/png" href="/frontend/assets/titlelogo.ico">
+    <!-- For better support -->
+    <link rel="shortcut icon" href="/frontend/assets/titlelogo.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body class="font-sans">
+<!-- Navbar -->
+<nav id="navbar" class="fixed top-0 left-0 w-full bg-white/50 backdrop-blur-md text-black shadow-md px-6 py-4 transition-all duration-500 z-50 flex items-center">
+    <div class="container mx-auto flex justify-between items-center">
+        <!-- Logo (Default) -->
+        <div class="relative">
+            <a href="index.html">
+                <img id="logo-default" src="/frontend/assets/new logo black.png" alt="Logo" class="h-12 transition-opacity duration-500">
+                <img id="logo-scroll" src="/frontend/assets/white-new-logo.webp" alt="Scrolled Logo" class="h-12 absolute top-0 left-0 opacity-0 transition-opacity duration-500">
+            </a>
+        </div>
+
+        <!-- Menu Button (Mobile) -->
+        <button id="menu-btn" class="text-gray-700 block md:hidden text-3xl focus:outline-none">
+            ☰
+        </button>
+
+        <!-- Menu Links (Desktop) -->
+        <ul id="menu" class="hidden md:flex space-x-6 font-semibold">
+            <li><a href="/frontend/index.html" class="nav-link px-4 py-2 rounded-full transition hover:text-blue-500">Home</a></li>
+            <li><a href="/frontend/pages/about.html" class="nav-link px-4 py-2 rounded-full transition hover:text-blue-500">About</a></li>
+            <li><a href="/frontend/pages/contact.html" class="nav-link px-4 py-2 rounded-full transition hover:text-blue-500">Contact</a></li>
+            <li><a href="tel:+917008937155" class="nav-link px-4 py-2 rounded-full transition hover:text-blue-500">+91 7008937155</a></li>
+            <li>
+                <a href="/frontend/admin.html" class="nav-link px-4 py-2 rounded-full bg-emerald-700 text-white shadow-md hover:bg-emerald-800 transition">
+                    Sign In
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-[80vh] bg-white text-gray-900 text-center transform -translate-y-full transition-transform duration-500 ease-in-out shadow-lg z-50 overflow-y-auto">    <div class="absolute top-7 left-6 text-xl font-bold">Menu</div>
+    <button id="close-btn" class="absolute top-5 right-5 text-3xl font-bold text-gray-900 focus:outline-none">x</button>
+    
+    <!-- Line below Menu and Close button -->
+    <hr class="absolute top-14 left-0 w-full border-t border-gray-300">
+    
+    <ul class="flex flex-col space-y-6 pt-20 text-xl">
+        <li><a href="/frontend/index.html" class="block py-3 hover:text-blue-500">Home</a></li>
+        <li><a href="/frontend/pages/about.html" class="block py-3 hover:text-blue-500">About</a></li>
+        <li><a href="/frontend/pages/contact.html" class="block py-3 hover:text-blue-500">Contact</a></li>
+        <li><a href="tel:+917008937155" class="block py-3 hover:text-blue-500">+91 7008937155</a></li>
+        <li>
+            <a href="/frontend/admin.html" class="block py-3 bg-blue-600 text-white rounded-md px-6 py-2 mx-auto w-32 hover:bg-blue-700">
+                Sign In
+            </a>
+        </li>
+    </ul>
+</div>
+</nav>
+
+<!-- JavaScript -->
+<script>
+    let lastScrollY = 0;
+    let navbar = document.getElementById("navbar");
+    let logoDefault = document.getElementById("logo-default");
+    let logoScroll = document.getElementById("logo-scroll");
+    let menuBtn = document.getElementById("menu-btn"); 
+    let isScrolled = false;
+
+    function handleScroll() {
+        let currentScrollY = window.scrollY;
+        let scrollThreshold = 50; // Change happens at 50px scroll
+
+        if (currentScrollY > scrollThreshold && !isScrolled) {
+            // Apply scroll changes
+            isScrolled = true;
+            navbar.classList.add("bg-[#152651]", "text-white", "rounded-b-[50px]", "shadow-lg");
+            navbar.classList.remove("bg-white", "text-black");
+
+            logoDefault.classList.add("opacity-0");
+            logoScroll.classList.remove("opacity-0");
+
+
+             // Change menu button color to white
+             menuBtn.classList.remove("text-gray-700");
+            menuBtn.classList.add("text-white");
+
+        } else if (currentScrollY <= scrollThreshold && isScrolled) {
+            // Revert to original navbar
+            isScrolled = false;
+            navbar.classList.add("bg-white", "text-black");
+            navbar.classList.remove("bg-[#152651]", "text-white", "rounded-b-[50px]", "shadow-lg");
+
+            logoDefault.classList.remove("opacity-0");
+            logoScroll.classList.add("opacity-0");
+
+             // Change menu button color back to gray
+             menuBtn.classList.remove("text-white");
+            menuBtn.classList.add("text-gray-700");
+        }
+    }
+
+    // Attach scroll event listener
+    window.addEventListener("scroll", handleScroll);
+
+   // Mobile Menu Toggle
+document.getElementById("menu-btn").addEventListener("click", function() {
+    document.getElementById("mobile-menu").classList.remove("-translate-y-full");
+    document.getElementById("mobile-menu").classList.add("translate-y-0");
+});
+
+document.getElementById("close-btn").addEventListener("click", function() {
+    document.getElementById("mobile-menu").classList.add("-translate-y-full");
+    document.getElementById("mobile-menu").classList.remove("translate-y-0");
+});
+
+
+    // Highlight active link
+    function setActiveLink() {
+        let links = document.querySelectorAll(".nav-link");
+        let currentPath = window.location.pathname;
+
+        links.forEach(link => {
+            let linkPath = new URL(link.href).pathname;
+
+            if (linkPath === currentPath) {
+                link.classList.add("bg-blue-500", "text-white", "hover:text-gray-800", "rounded-full");
+            } else {
+                link.classList.remove("bg-blue-500", "text-white","hover:text-gray-800", "rounded-full");
+            }
+        });
+    }
+
+    // Run on page load
+    window.addEventListener("DOMContentLoaded", setActiveLink);
+</script>
+
+  <!-- Properties Section -->
+  <main class="my-8">
+    <section id="property-section">
+      <iframe src="./components/properties/properties.html" class="w-full h-screen border-none"></iframe>
+    </section>
+  </main>
+
+
+<!-- Popup Screen -->
+<div id="popup" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden cursor-move z-10">
+    <div id="popupBox" class="bg-white p-4 rounded-lg shadow-lg w-[1000px] h-[420px] mt-28 relative flex flex-col items-center">
+        <!-- Cross Button -->
+        <button id="closePopup" class="absolute top-3 right-3 text-red-600 hover:text-red-800 text-2xl font-bold z-10">&times;</button>
+
+        <!-- Image Container -->
+        <div class="relative w-full h-[500px] overflow-hidden rounded-lg ">
+            <img id="popupImage" src="frontend/assets/image/home/Popup/meadowex1.jpeg" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100">
+        </div>
+
+        <!-- Show More Link -->
+        <a href="#" class="mt-2 text-blue-500 hover:underline">Show More</a>
+    </div>
+</div>
+
+<!-- Small Icon -->
+<div id="popupIcon" class="fixed bottom-4 right-4 bg-blue-500 text-white p-3 rounded-full shadow-lg hidden cursor-pointer">
+    <span class="text-lg">🔍</span>
+</div>
+
+<style>
+@keyframes zoom {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+.animate-zoom {
+    animation: zoom 10s ease-in-out infinite alternate;
+}
+
+/* Smooth fade effect */
+.fade-out {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+.fade-in {
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+}
+</style>
+
+
+<!-- Projects Section -->
+<section class="py-12 bg-gray-100">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Our Projects</h2>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Project 1 -->
+            <div class="relative group overflow-hidden rounded-lg shadow-lg">
+                <a href="/frontend/pages/full-listing/sell-listing3.html">
+                <img id="project1" src="/Home/assets/3d-rendering-contemporary-modern-dining-room-living-room-with-luxury-decor.jpg" alt="Upcoming Project 1" class="w-full h-64 object-cover transition duration-300 group-hover:scale-105">
+                <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-3 text-center transform translate-y-6 opacity-0 transition duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                    <h3 class="text-lg font-semibold">Meadowex</h3>
+                </div></a>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="relative group overflow-hidden rounded-lg shadow-lg">
+                <a href="/frontend/pages/full-listing/sell-listing2.html">
+                <img id="project2" src="/Home/assets/3d-rendering-loft-luxury-living-room-with-bookshelf-near-bookshelf (1).jpg" alt="Upcoming Project 2" class="w-full h-64 object-cover transition duration-300 group-hover:scale-105">
+                <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-3 text-center transform translate-y-6 opacity-0 transition duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                    <h3 class="text-lg font-semibold">Polaris</h3>
+                </div></a>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="relative group overflow-hidden rounded-lg shadow-lg">
+                <a href="/frontend/pages/full-listing/sell-listing4.html">
+                <img id="project3" src="/Home/assets/3d-rendering-modern-dining-room-living-room-with-luxury-decor.jpg" alt="Upcoming Project 3" class="w-full h-64 object-cover transition duration-300 group-hover:scale-105">
+                <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-3 text-center transform translate-y-6 opacity-0 transition duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                    <h3 class="text-lg font-semibold">Suman Mansion</h3>
+                </div></a>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="relative group overflow-hidden rounded-lg shadow-lg">
+                <a href="/frontend/pages/full-listing/sell-listing1.html">
+                <img id="project4" src="/Home/assets/bangkok-thailand-august-12-2016-beautiful-luxury-living-room.jpg" alt="Upcoming Project 4" class="w-full h-64 object-cover transition duration-300 group-hover:scale-105">
+                <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-3 text-center transform translate-y-6 opacity-0 transition duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                    <h3 class="text-lg font-semibold">Arya Suman Complex</h3>
+                </div>
+            </div></a>
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript for Image Slideshow -->
+<script>
+    // Images for each project
+    const images = {
+        project1: [
+            "/frontend/assets/image/home/Projects/Meadowex/meadowex1.jpeg",
+            "/frontend/assets/image/home/Projects/Meadowex/meadowex2.jpeg",
+            "/frontend/assets/image/home/Projects/Meadowex/meadowex3.jpeg",
+            "/frontend/assets/image/home/Projects/Meadowex/meadowex4.jpeg",
+            "/frontend/assets/image/home/Projects/Meadowex/meadowex5.jpeg",
+            "/frontend/assets/image/home/Projects/Meadowex/meadowex6.jpeg",
+            "/frontend/assets/image/home/Projects/Meadowex/meadowex7.jpeg",
+            "/frontend/assets/image/home/Projects/Meadowex/meadowex8.jpeg"
+        ],
+        project2: [
+            "/frontend/assets/image/home/Projects/Polaris/jbpolaris.jpeg",
+            "/frontend/assets/image/home/Projects/Polaris/jbpolaris2.jpeg",
+            "/frontend/assets/image/home/Projects/Polaris/jbpolaris3.jpeg",
+            "/frontend/assets/image/home/Projects/Polaris/jbpolaris4.jpeg",
+            "/frontend/assets/image/home/Projects/Polaris/jbpolaris5.jpeg"
+        ],
+        project3: [
+            "/frontend/assets/image/home/Projects/suman/suman1.jpeg",
+            "/frontend/assets/image/home/Projects/suman/suman2.jpeg"
+        ],
+        project4: [
+            "/frontend/assets/image/home/Projects/aryasuman/aryasuman.jpeg",
+        ]
+
+    };
+
+    function cycleImages(projectId, imageArray) {
+        let index = 0;
+        setInterval(() => {
+            document.getElementById(projectId).src = imageArray[index];
+            index = (index + 1) % imageArray.length;
+        }, 3000); // Change image every 3 seconds
+    }
+
+    // Start the image slideshow for each project
+    cycleImages("project1", images.project1);
+    cycleImages("project2", images.project2);
+    cycleImages("project3", images.project3);
+    cycleImages("project4", images.project4);
+</script>
+
+
+<!--
+<section class="bg-gray-100 py-12">
+    <div class="container mx-auto px-6 lg:px-16">
+      <h2 class="text-3xl font-bold text-gray-900 text-center mb-8">Featured Properties</h2>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <-- Property Card 1 --
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition duration-300">
+          <img src="list1.jpg" alt="Property Image" class="w-full h-56 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900">Luxury Villa in New York</h3>
+            <p class="text-gray-600 text-sm mt-2">3 Bed • 2 Bath • 2500 sqft</p>
+            <p class="text-blue-600 font-bold text-lg mt-2">₹750,000</p>
+            <a href="#" class="block mt-4 text-white bg-blue-600 hover:bg-blue-700 text-center py-2 rounded-lg">View Details</a>
+          </div>
+        </div>
+  
+        <-- Property Card 2 --
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition duration-300">
+          <img src="list1.jpg" alt="Property Image" class="w-full h-56 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900">Modern Apartment in California</h3>
+            <p class="text-gray-600 text-sm mt-2">2 Bed • 1 Bath • 1800 sqft</p>
+            <p class="text-blue-600 font-bold text-lg mt-2">₹450,000</p>
+            <a href="#" class="block mt-4 text-white bg-blue-600 hover:bg-blue-700 text-center py-2 rounded-lg">View Details</a>
+          </div>
+        </div>
+  
+        <-- Property Card 3 --
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition duration-300">
+          <img src="list1.jpg" alt="Property Image" class="w-full h-56 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900">Cozy House in Florida</h3>
+            <p class="text-gray-600 text-sm mt-2">4 Bed • 3 Bath • 3000 sqft</p>
+            <p class="text-blue-600 font-bold text-lg mt-2">₹620,000</p>
+            <a href="#" class="block mt-4 text-white bg-blue-600 hover:bg-blue-700 text-center py-2 rounded-lg">View Details</a>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </section>-->
+    
+    <!-- Footer -->
+
+<footer class="bg-gray-900 text-white py-8 mt-20">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- About Section with Logo -->
+        <div>
+            <img src="/frontend/assets/white-new-logo.webp" alt="Dealinee Estate Logo" class="w-48 mb-4"> 
+
+          <h3 class="text-xl font-semibold mb-2">About Us</h3>
+          <p class="text-gray-400">We are committed to empowering communities through education, social initiatives, and sustainable solutions.</p>
+        </div>
+  
+        <!-- Quick Links -->
+        <div>
+          <h3 class="text-xl font-semibold mb-2">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="/index.html" class="text-gray-400 hover:text-white">Home</a></li>
+            <li><a href="/frontend/pages/about/about.html" class="text-gray-400 hover:text-white">About</a></li>
+            <li><a href="/frontend/pages/contact/contact.html" class="text-gray-400 hover:text-white">Contact</a></li>
+          </ul>
+        </div>
+  
+        <!-- Contact Info -->
+        <div>
+          <h3 class="text-xl font-semibold mb-2">Contact Us</h3>
+          <p class="text-gray-400">Email: dealineeestate@gmail.com</p>
+          <p class="text-gray-400">Phone: +91 700 893 7155</p>
+          <p class="text-gray-400">Address: Flat No - 5A, 5th Floor, Iscon Residency Apartment,
+            Near Koel Campus, Sishu Vihar, Patia,
+            Bhubaneswar, Odisha - 751024 , India</p>
+        </div>
+      </div>
+  
+      <!-- Social Media & Copyright -->
+      <div class="mt-8 flex flex-col md:flex-row justify-between items-center border-t border-gray-700 pt-4">
+        <p class="text-gray-400 text-sm">© 2025 Dealinee Estate Real Estate Company. All Rights Reserved.</p>
+        <div class="flex space-x-6 mt-2 md:mt-0">
+          <a href="https://www.facebook.com/profile.php?id=100083070285659" target="_blank" class="text-gray-400 hover:text-blue-500 transition duration-300 text-2xl">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="https://twitter.com/dealineeestate" target="_blank" class="text-gray-400 hover:text-blue-400 transition duration-300 text-2xl">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="https://www.instagram.com/dealinee_estate/" target="_blank" class="text-gray-400 hover:text-pink-500 transition duration-300 text-2xl">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/dealineeestate" target="_blank" class="text-gray-400 hover:text-blue-700 transition duration-300 text-2xl">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+    
+
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function () {
+            document.getElementById('menu').classList.toggle('hidden');
+        });
+    </script>
+    <script src="index.js"></script>
+</body>
+</html>

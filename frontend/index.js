@@ -71,9 +71,7 @@ let currentFilter = "buy"; // default filter
 
 async function loadProperties(location = "", propertyFor = currentFilter) {
   try {
-    let url = `http://localhost:5000/api/properties?propertyFor=${encodeURIComponent(
-      propertyFor
-    )}`;
+    let url = `https://dealinee.onrender.com/api/properties?propertyFor=${encodeURIComponent(propertyFor)}`;
     if (location.trim() !== "") {
       url += `&location=${encodeURIComponent(location)}`;
     }
@@ -105,8 +103,7 @@ async function loadProperties(location = "", propertyFor = currentFilter) {
               ${images
                 .map(
                   (img, i) => `
-                <img 
-                  src="http://localhost:5000${img}" 
+                <img src="https://dealinee.onrender.com${img}" 
                   class="absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
                     i === 0 ? "opacity-100" : "opacity-0"
                   }"

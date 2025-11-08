@@ -8,7 +8,7 @@ async function loadProperties(propertyFor = "", location = "") {
     if (propertyFor) queryParams.append("propertyFor", propertyFor);
     if (location) queryParams.append("location", location);
 
-    const res = await fetch(`http://localhost:5000/api/properties?${queryParams.toString()}`);
+    const res = await fetch(`https://dealinee.onrender.com/api/properties?${queryParams.toString()}`);
     const data = await res.json();
 
     const container = document.getElementById("property-list");
@@ -24,68 +24,39 @@ async function loadProperties(propertyFor = "", location = "") {
         const images = Array.isArray(p.images) ? p.images : [p.images];
         const phoneNumber = "9876543210";
         return `
-  <div class="group bg-white border border-gray-100 rounded-2xl shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden">
-    <!-- 🖼️ Property Image -->
-    <div class="relative h-56 w-full overflow-hidden">
-      <div id="slider-${index}" class="h-full w-full relative">
-        ${images
-          .map(
-            (img, i) => `
-            <img 
-              src="http://localhost:5000${img}" 
-              alt="${p.title}"
-              class="absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${i === 0 ? "opacity-100" : "opacity-0"}"
-            />`
-          )
-          .join("")}
-      </div>
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col justify-between">
+            <div class="relative h-56 overflow-hidden">
+              <div id="slider-${index}" class="h-56 w-full relative">
+                ${images
+                  .map(
+                    (img, i) => `
+                  <img src="https://dealinee.onrender.com${img}"
+                       class="absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${i === 0 ? "opacity-100" : "opacity-0"}" />`
+                  )
+                  .join("")}
+              </div>
+              <span class="absolute top-2 right-2 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow z-10">
+                Available
+              </span>
+            </div>
 
-      <!-- Overlay Label -->
-      <span class="absolute top-3 left-3 bg-white/90 text-gray-800 text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
-        ${p.propertyFor}
-      </span>
+            <div class="p-4 space-y-3 flex-grow">
+              <h3 class="text-xl font-semibold text-gray-800">${p.title}</h3>
+              <p class="text-gray-500">${p.location}</p>
+              <p class="text-sm text-gray-600"><strong>${p.propertyFor}</strong> - ${p.furnishing}</p>
+              <div class="flex flex-wrap gap-3 text-sm text-gray-600">
+                <span class="bg-gray-100 px-2 py-1 rounded-lg">SBU: ${p.SBU}</span>
+                <span class="bg-gray-100 px-2 py-1 rounded-lg">CA: ${p.CA}</span>
+                <span class="bg-gray-100 px-2 py-1 rounded-lg">Type: ${p.type}</span>
+              </div>
+            </div>
 
-      <span class="absolute top-3 right-3 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
-        Available
-      </span>
-
-      <!-- Hover Overlay -->
-      <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-    </div>
-
-    <!-- 📄 Property Info -->
-    <div class="p-5 space-y-3">
-      <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
-        ${p.title}
-      </h3>
-      <p class="text-gray-500 text-sm flex items-center gap-1">
-        📍 <span>${p.location}</span>
-      </p>
-      <p class="text-sm text-gray-600">
-        <strong>${p.type}</strong> • ${p.furnishing}
-      </p>
-
-      <!-- Badges -->
-      <div class="flex flex-wrap gap-2 mt-3">
-        <span class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-medium">
-          SBU: ${p.SBU}
-        </span>
-        <span class="bg-purple-50 text-purple-600 px-3 py-1 rounded-full text-xs font-medium">
-          CA: ${p.CA}
-        </span>
-      </div>
-    </div>
-
-    <!-- CTA -->
-    <div class="px-5 pb-5">
-      <a href="tel:9876543210" 
-         class="block w-full text-center bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-2 rounded-full shadow hover:shadow-lg hover:scale-105 transition-all duration-300">
-        📞 Book Now
-      </a>
-    </div>
-  </div>
-`;
-
+            <div class="p-4 pt-0">
+              <a href="tel:${phoneNumber}" class="block w-full text-center bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg transition">
+                Book Now
+              </a>
+            </div>
+          </div>`;
       })
       .join("");
 

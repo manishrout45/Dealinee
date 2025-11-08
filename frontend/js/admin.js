@@ -16,7 +16,7 @@ if (!token) {
 // ✅ Load Properties
 async function loadProperties() {
   try {
-    const res = await fetch("http://localhost:5000/api/admin/properties", {
+    const res = await fetch("https://dealinee.onrender.com/api/admin/properties", {
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -34,7 +34,7 @@ async function loadProperties() {
 
         <div class="relative w-full h-48 overflow-hidden">
           ${p.images?.length ? p.images.map((img,i)=>`
-            <img src="http://localhost:5000${img}"
+            <img src="https://dealinee.onrender.com${img}"
             class="property-slide w-full h-full object-cover absolute transition-opacity duration-700 ${i===0 ? 'opacity-100':'opacity-0'}"/>
           `).join("") : `<p class="text-center text-gray-400 p-10 text-sm">No images</p>`}
         </div>
@@ -82,7 +82,7 @@ if (form) {
     e.preventDefault();
     const fd = new FormData(form);
 
-    const res = await fetch("http://localhost:5000/api/admin/properties", {
+    const res = await fetch("https://dealinee.onrender.com/api/admin/properties", {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
       body: fd,
@@ -106,7 +106,7 @@ propertyList.addEventListener("click", async (e) => {
 
   // Edit
   if (e.target.classList.contains("update-btn")) {
-    const res = await fetch(`http://localhost:5000/api/admin/properties/${id}`, {
+    const res = await fetch(`https://dealinee.onrender.com/api/admin/properties/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -127,7 +127,7 @@ propertyList.addEventListener("click", async (e) => {
   if (e.target.classList.contains("delete-btn")) {
     if (!confirm("Delete property?")) return;
 
-    const res = await fetch(`http://localhost:5000/api/admin/properties/${id}`, {
+    const res = await fetch(`https://dealinee.onrender.com/api/admin/properties/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` }
     });
@@ -148,7 +148,7 @@ updateForm.addEventListener("submit", async (e) => {
   const id = updateForm.id.value;
   const fd = new FormData(updateForm);
 
-  const res = await fetch(`http://localhost:5000/api/admin/properties/${id}`, {
+  const res = await fetch(`https://dealinee.onrender.com/api/admin/properties/${id}`, {
     method: "PUT",
     headers: { Authorization: `Bearer ${token}` },
     body: fd
